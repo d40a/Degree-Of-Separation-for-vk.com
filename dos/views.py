@@ -9,7 +9,7 @@ import time
 import json
 
 ACCESS_TOKEN = 'e8e77b6ed30fb2f8d38ea2ed74d0842b677c990c0fa15551fc9317adad20eb6a52e046bb0714e15a25216'
-REDIRECT_URI = 'http://localhost:8000/dos'
+REDIRECT_URI = 'http://198.211.121.159:8000/dos/'
 CLIENT_ID = '6011990'
 VERSION = '5.63'
 
