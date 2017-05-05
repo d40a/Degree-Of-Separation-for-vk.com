@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <title>Degree of separation for VK</title>
+
+    <!-- BOOTSTRAP-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <div class="col-xs-12" style="height:50px;"></div>
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="form-group">
+                    <label for="first_user"> First person </label>
+                    <input type="text" class="form-control" id="first_user">
+                </div>
+
+                <div class="form-group">
+                    <label for="second_user"> Second person </label>
+                    <input type="text" class="form-control" id="second_user">
+                </div>
+
+                <button type="submit" class="btn btn-default" id="submit">Submit</button>
+
+                <script>
+                    $('#submit').click(function() {
+                        var url = 'http://localhost:8000/dos/find_path/';
+                        var args = {
+                            'first_user': $('#first_user').val(),
+                            'second_user': $('#second_user').val(),
+                        };
+                        $('#list_of_users').empty();
+                        $.get(url, args, function(json_list_of_users) {
+                            var list_of_users = $.parseJSON(json_list_of_users);
+                            for (var i in list_of_users) {
+                                var user = list_of_users[i];
+
+                                var li = $('<li />', {
+                                    class: 'list-group-item',
+                                });
+                                
+                                var img = $('<img />', {
+                                    src: user.photo_50,
+                                });
+                                var img_to_vk_link = $('<a />', {
+                                    href: "http://vk.com/id" + user.uid,
+                                });
+                                img.appendTo(img_to_vk_link);
+                                img_to_vk_link.appendTo(li);
+
+                                var name_to_vk_link = $('<a />', {
+                                    href: "http://vk.com/id" + user.uid,
+                                    style: 'margin-left:10px',
+                                    text: user.first_name + ' ' + user.last_name,
+                                });
+                                name_to_vk_link.appendTo(li);
+                                li.appendTo('#list_of_users');
+                            }
+                        });
+                    });
+                </script>
+
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-group" id="list_of_users">
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
